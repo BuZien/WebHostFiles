@@ -212,7 +212,7 @@ function createLink(href,target,title)
 {
 
 var myLink = document.createElement('a');
-        if(href.substring(href.length-13,href.length)=="#comment-form") {href= href.substring(0,href.length-13)+"?utm_source=bp_recent&utm-medium=gadget&utm_campaign=bp_recent"+"#comment-form";myLink.setAttribute("href", href);}
+        if(href.substring(href.length-13,href.length)=="#comment-form") {href= href.substring(0,href.length-13)+"?"+"#comment-form";myLink.setAttribute("href", href);}
         else myLink.setAttribute("href", href+"?utm_source=BP_recent&utm-medium=gadget&utm_campaign=bp_recent");
         myLink.setAttribute("target", target);
         myLink.setAttribute("title", title);
