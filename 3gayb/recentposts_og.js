@@ -208,7 +208,7 @@ function createLink(href,target,title)
 {
 
 var myLink = document.createElement('a');
-        if(href.substring(href.length-13,href.length)=="#comment-form") {href= href.substring(0,href.length-13)+"?"+"#comment-form";myLink.setAttribute("href", href);}
+        if(href.substring(href.length-13,href.length)=="#comment-form") {href= href.substring(0,href.length-13);myLink.setAttribute("href", href);}
         else myLink.setAttribute("href", href+);
         myLink.setAttribute("target", target);
         myLink.setAttribute("title", title);
