@@ -107,10 +107,10 @@ var s;
         }
       try{if(myMargin!=0)myImage.style.margin = myMargin+"px";} catch(error){}
         myImage.setAttribute("alt", postTitleOriginal);
-        myImage.setAttribute("width", imgDim);
-        myImage.setAttribute("height", imgDim);
+        myImage.setAttribute("width", imgDim+"px");
+        myImage.setAttribute("height", imgDim+"px");
         myLink = document.createElement('a');
-        myLink.setAttribute("href", postUrl+"?utm_source=bp_recent&utm-medium=gadget&utm_campaign=bp_recent");
+        myLink.setAttribute("href", postUrl);
         myLink.setAttribute("target", "_top");
         myLink.setAttribute("title", postTitleOriginal);
         myLink.appendChild(myImage);
@@ -192,14 +192,10 @@ myDiv = createDiv("bp_clear_float");
 myDiv.style.clear=imgFloat;
 main.appendChild(myDiv);
 }
-document.getElementById("bp_recent_link").style.backgroundImage="url('http://3.bp.blogspot.com/-H8WPIh3wjr4/TmHnuo9tnnI/AAAAAAAACDE/_yuVqfb1HAk/blogger-widgets.png')";
-document.getElementById("bp_recent_link").style.backgroundRepeat="no-repeat";
 try{
 if(myMargin!=0 && imgFloat=="left" && flag==0) document.getElementById("bp_recent_link").style.marginLeft = myMargin+"px";
 } catch(error){}
 }
-
-
 function createDiv(className)
 {
 var myDiv = document.createElement('div');
@@ -213,7 +209,7 @@ function createLink(href,target,title)
 
 var myLink = document.createElement('a');
         if(href.substring(href.length-13,href.length)=="#comment-form") {href= href.substring(0,href.length-13)+"?"+"#comment-form";myLink.setAttribute("href", href);}
-        else myLink.setAttribute("href", href+"?utm_source=BP_recent&utm-medium=gadget&utm_campaign=bp_recent");
+        else myLink.setAttribute("href", href+);
         myLink.setAttribute("target", target);
         myLink.setAttribute("title", title);
         return myLink;
