@@ -98,6 +98,7 @@ var s;
     if (showThumbs == true && thumbUrl != "") {
         myImage = document.createElement('img');
         myImage.setAttribute("src", thumbUrl);
+        myImage.setAttribute("class", lazyload);
         if(imgFloat!="none")
         {
         float_clear=true;
