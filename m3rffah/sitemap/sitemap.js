@@ -162,11 +162,11 @@ function displayToc(filter) {
 // this function creates a three-column table and adds it to the screen
    var numDisplayed = 0;
    var tocTable = '';
-   var tocHead1 = 'POST TITLE';
-   var tocTool1 = 'Click to sort by title';
-   var tocHead2 = 'POST DATE';
-   var tocTool2 = 'Click to sort by date';
-   var tocHead3 = 'LABELS';
+   var tocHead1 = 'العنوان';
+   var tocTool1 = 'اضغط للترتيب حسب العنوان';
+   var tocHead2 = 'تاريخ النشر';
+   var tocTool2 = 'اضغط للترتيب حسب تاريخ النشر';
+   var tocHead3 = 'الأقسام';
    var tocTool3 = '';
    if (sortBy == "titleasc") { 
       tocTool1 += ' (descending)';
@@ -185,7 +185,7 @@ function displayToc(filter) {
       tocTool2 += ' (oldest first)';
    }
    if (postFilter != '') {
-      tocTool3 = 'Click to show all posts';
+      tocTool3 = 'اضغط لعرض كل المشاركات';
    }
    tocTable += '<table>';
    tocTable += '<tr>';
@@ -242,12 +242,12 @@ function showToc() {
      var toclink = document.getElementById("toclink");
    
   }
-  else { alert("Just wait... TOC is loading"); }
+  else { alert("لحظة من فضلك، جاري التحميل"); }
 }
 
 function hideToc() {
   var tocdiv = document.getElementById("toc");
   tocdiv.innerHTML = '';
   var toclink = document.getElementById("toclink");
-  toclink.innerHTML = '<a href="#" onclick="scroll(0,0); showToc(); Effect.toggle('+"'toc-result','blind');"+'">» Show Table of Contents</a> <img src="http://chenkaie.blog.googlepages.com/new_1.gif"/>';
+  toclink.innerHTML = '<a href="#" onclick="scroll(0,0); showToc(); Effect.toggle('+"'toc-result','blind');"+'">عرض الكل</a> <img src="http://chenkaie.blog.googlepages.com/new_1.gif"/>';
 }
