@@ -166,7 +166,7 @@ function displaySiteMapTable(filter) {
    var SiteMapTableTable = '';
    var SiteMapTableHead1 = 'عنوان الموضوع';
    var SiteMapTableTool1 = 'إضغط للترتيب ابجدياً';
-   var SiteMapTableHead2 = 'تاريخ النشر';
+   var SiteMapTableHead2 = 'النشر';
    var SiteMapTableTool2 = 'إضغط للترتيب حسب تاريخ النشر';
    var SiteMapTableHead3 = 'التسميات';
    var SiteMapTableTool3 = '';
