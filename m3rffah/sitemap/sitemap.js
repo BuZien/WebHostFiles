@@ -7,17 +7,17 @@
    var postLabels = new Array();    // array of post labels
 
 // global variables
-   var sortBy = "datenewest";         // default value for sorting ToC
-   var tocLoaded = false;           // true if feed is read and ToC can be displayed
+   var sortBy = "datenewest";         // default value for sorting SiteMapTable
+   var SiteMapTableLoaded = false;           // true if feed is read and SiteMapTable can be displayed
    var numChars = 250;              // number of characters in post summary
    var postFilter = '';             // default filter value
-   var tocdiv = document.getElementById("SiteMapTable"); //the toc container
+   var SiteMapTablediv = document.getElementById("SiteMap"); //the SiteMapTable container
    var totalEntires =0; //Entries grabbed till now
    var totalPosts =0; //Total number of posts in the blog.
 
 // main callback function
 
-function loadtoc(json) {
+function loadSiteMapTable(json) {
 
    function getPostData() {
    // this functions reads all postdata from the json-feed and stores it in arrays
@@ -30,8 +30,8 @@ function loadtoc(json) {
          var nextjsoncall = document.createElement('script');
          nextjsoncall.type = 'text/javascript';
          startindex=totalEntires+1;
-         nextjsoncall.setAttribute("src", "/feeds/posts/summary?start-index=" + startindex + "&max-results=500&alt=json-in-script&callback=loadtoc");
-         tocdiv.appendChild(nextjsoncall);
+         nextjsoncall.setAttribute("src", "/feeds/posts/summary?start-index=" + startindex + "&max-results=500&alt=json-in-script&callback=loadSiteMapTable");
+         SiteMapTablediv.appendChild(nextjsoncall);
          }
       // main loop gets all the entries from the feed
          for (var i = 0; i < numEntries; i++) {
@@ -75,7 +75,7 @@ function loadtoc(json) {
             var pll = '';
             if ("category" in entry) {
                for (var k = 0; k < entry.category.length; k++) {
-                  pll += '<a href="javascript:filterPosts(\'' + entry.category[k].term + '\');" title="Click here to select all posts with label \'' + entry.category[k].term + '\'">' + entry.category[k].term + '</a>,  ';
+                  pll += '<a href="javascript:filterPosts(\'' + entry.category[k].term + '\');" title="انقر هنا لتحديد جميع المواضيع ذات التسمية \'' + entry.category[k].term + '\'">' + entry.category[k].term + '</a>,  ';
                }
             var l = pll.lastIndexOf(',');
             if (l != -1) { pll = pll.substring(0,l); }
@@ -89,10 +89,10 @@ function loadtoc(json) {
             postLabels.push(pll);
          }
       }
-      if(totalEntires==totalPosts) {tocLoaded=true;showToc();}
+      if(totalEntires==totalPosts) {SiteMapTableLoaded=true;showSiteMapTable();}
    } // end of getPostData
 
-// start of showtoc function body
+// start of showSiteMapTable function body
 // get the number of entries that are in the feed
 //   numEntries = json.feed.entry.length;
 
@@ -101,7 +101,7 @@ function loadtoc(json) {
 
 // sort the arrays
    sortPosts(sortBy);
-   tocLoaded = true;
+   SiteMapTableLoaded = true;
 }
 
 
@@ -112,9 +112,9 @@ function loadtoc(json) {
 function filterPosts(filter) {
 // This function changes the filter
 // and displays the filtered list of posts
-  // document.getElementById("SiteMapTable").scrollTop = document.getElementById("SiteMapTable").offsetTop;;
+  // document.getElementById("SiteMap").scrollTop = document.getElementById("SiteMap").offsetTop;;
    postFilter = filter;
-   displayToc(postFilter);
+   displaySiteMapTable(postFilter);
 } // end filterPosts
 
 function allPosts() {
@@ -122,7 +122,7 @@ function allPosts() {
 // and displays all posts
 
    postFilter = '';
-   displayToc(postFilter);
+   displaySiteMapTable(postFilter);
 } // end allPosts
 
 function sortPosts(sortBy) {
@@ -158,98 +158,98 @@ function sortPosts(sortBy) {
    }
 } // end sortPosts
 
-// displaying the toc
+// displaying the SiteMapTable
 
-function displayToc(filter) {
+function displaySiteMapTable(filter) {
 // this function creates a three-column table and adds it to the screen
    var numDisplayed = 0;
-   var tocTable = '';
-   var tocHead1 = 'POST TITLE';
-   var tocTool1 = 'Click to sort by title';
-   var tocHead2 = 'POST DATE';
-   var tocTool2 = 'Click to sort by date';
-   var tocHead3 = 'LABELS';
-   var tocTool3 = '';
+   var SiteMapTableTable = '';
+   var SiteMapTableHead1 = 'عنوان الموضوع';
+   var SiteMapTableTool1 = 'إضغط للترتيب ابجدياً';
+   var SiteMapTableHead2 = 'تاريخ النشر';
+   var SiteMapTableTool2 = 'إضغط للترتيب حسب تاريخ النشر';
+   var SiteMapTableHead3 = 'التسميات';
+   var SiteMapTableTool3 = '';
    if (sortBy == "titleasc") { 
-      tocTool1 += ' (descending)';
-      tocTool2 += ' (newest first)';
+      SiteMapTableTool1 += ' (تنازلي)';
+      SiteMapTableTool2 += ' (الأحدث أولاً)';
    }
    if (sortBy == "titledesc") { 
-      tocTool1 += ' (ascending)';
-      tocTool2 += ' (newest first)';
+      SiteMapTableTool1 += ' (تصاعدي)';
+      SiteMapTableTool2 += ' (الأحدث أولاً)';
    }
    if (sortBy == "dateoldest") { 
-      tocTool1 += ' (ascending)';
-      tocTool2 += ' (newest first)';
+      SiteMapTableTool1 += ' (تصاعدي)';
+      SiteMapTableTool2 += ' (الأحدث أولاً)';
    }
    if (sortBy == "datenewest") { 
-      tocTool1 += ' (ascending)';
-      tocTool2 += ' (oldest first)';
+      SiteMapTableTool1 += ' (تصاعدي)';
+      SiteMapTableTool2 += ' (الأقدم أولا)';
    }
    if (postFilter != '') {
-      tocTool3 = 'Click to show all posts';
+      SiteMapTableTool3 = 'انقر لإظهار جميع المشاركات';
    }
-   tocTable += '<table>';
-   tocTable += '<tr>';
-   tocTable += '<td class="SiteMapTable-header-col1">';
-   tocTable += '<a href="javascript:toggleTitleSort();" title="' + tocTool1 + '">' + tocHead1 + '</a>';
-   tocTable += '</td>';
-   tocTable += '<td class="SiteMapTable-header-col2">';
-   tocTable += '<a href="javascript:toggleDateSort();" title="' + tocTool2 + '">' + tocHead2 + '</a>';
-   tocTable += '</td>';
-   tocTable += '<td class="SiteMapTable-header-col3">';
-   tocTable += '<a href="javascript:allPosts();" title="' + tocTool3 + '">' + tocHead3 + '</a>';
-   tocTable += '</td>';
-   tocTable += '</tr>';
+   SiteMapTableTable += '<table>';
+   SiteMapTableTable += '<tr>';
+   SiteMapTableTable += '<td class="SiteMapTable-header-col1">';
+   SiteMapTableTable += '<a href="javascript:toggleTitleSort();" title="' + SiteMapTableTool1 + '">' + SiteMapTableHead1 + '</a>';
+   SiteMapTableTable += '</td>';
+   SiteMapTableTable += '<td class="SiteMapTable-header-col2">';
+   SiteMapTableTable += '<a href="javascript:toggleDateSort();" title="' + SiteMapTableTool2 + '">' + SiteMapTableHead2 + '</a>';
+   SiteMapTableTable += '</td>';
+   SiteMapTableTable += '<td class="SiteMapTable-header-col3">';
+   SiteMapTableTable += '<a href="javascript:allPosts();" title="' + SiteMapTableTool3 + '">' + SiteMapTableHead3 + '</a>';
+   SiteMapTableTable += '</td>';
+   SiteMapTableTable += '</tr>';
    for (var i = 0; i < postTitle.length; i++) {
       if (filter == '') {
-         tocTable += '<tr><td class="SiteMapTable-entry-col1"><a href="' + postUrl[i] + '" title="' + postSum[i] + '">' + postTitle[i] + '</a></td><td class="SiteMapTable-entry-col2">' + postDate[i] + '</td><td class="SiteMapTable-entry-col3">' + postLabels[i] + '</td></tr>';
+         SiteMapTableTable += '<tr><td class="SiteMapTable-entry-col1"><a href="' + postUrl[i] + '" title="' + postSum[i] + '">' + postTitle[i] + '</a></td><td class="SiteMapTable-entry-col2">' + postDate[i] + '</td><td class="SiteMapTable-entry-col3">' + postLabels[i] + '</td></tr>';
          numDisplayed++;
       } else {
           z = postLabels[i].lastIndexOf(filter);
           if ( z!= -1) {
-             tocTable += '<tr><td class="SiteMapTable-entry-col1"><a href="' + postUrl[i] + '" title="' + postSum[i] + '">' + postTitle[i] + '</a></td><td class="SiteMapTable-entry-col2">' + postDate[i] + '</td><td class="SiteMapTable-entry-col3">' + postLabels[i] + '</td></tr>';
+             SiteMapTableTable += '<tr><td class="SiteMapTable-entry-col1"><a href="' + postUrl[i] + '" title="' + postSum[i] + '">' + postTitle[i] + '</a></td><td class="SiteMapTable-entry-col2">' + postDate[i] + '</td><td class="SiteMapTable-entry-col3">' + postLabels[i] + '</td></tr>';
              numDisplayed++;
           }
         }
    }
-   tocTable += '</table>';
+   SiteMapTableTable += '</table>';
    if (numDisplayed == postTitle.length) {
-      var tocNote = '<span class="SiteMapTable-note">Displaying all ' + postTitle.length + ' posts<br/></span>'; }
+      var SiteMapTableNote = '<span class="SiteMapTable-note">عرض كافة المواضيع وعددها ' + postTitle.length + ' موضوع<br/></span>'; }
    else {
-      var tocNote = '<span class="SiteMapTable-note">Displaying ' + numDisplayed + ' posts labeled \'';
-      tocNote += postFilter + '\' of '+ postTitle.length + ' posts total<br/></span>';
+      var SiteMapTableNote = '<span class="SiteMapTable-note">عرض ' + numDisplayed + ' مواضيع من قسم \'';
+      SiteMapTableNote += postFilter + '\' من إجمالي '+ postTitle.length + ' موضوع<br/></span>';
    }
-   tocdiv.innerHTML = tocNote + tocTable;
-} // end of displayToc
+   SiteMapTablediv.innerHTML = SiteMapTableNote + SiteMapTableTable;
+} // end of displaySiteMapTable
 
 function toggleTitleSort() {
    if (sortBy == "titleasc") { sortBy = "titledesc"; }
    else { sortBy = "titleasc"; }
    sortPosts(sortBy);
-   displayToc(postFilter);
+   displaySiteMapTable(postFilter);
 } // end toggleTitleSort
 
 function toggleDateSort() {
    if (sortBy == "datenewest") { sortBy = "dateoldest"; }
    else { sortBy = "datenewest"; }
    sortPosts(sortBy);
-   displayToc(postFilter);
-} // end toggleTitleSort
-
-
-function showToc() {
-  if (tocLoaded) { 
-     displayToc(postFilter);
-     var toclink = document.getElementById("toclink");
-   
-  }
-  else { alert("Just wait... TOC is loading"); }
+   displaySiteMapTable(postFilter);
 }
 
-function hideToc() {
-  var tocdiv = document.getElementById("toc");
-  tocdiv.innerHTML = '';
-  var toclink = document.getElementById("toclink");
-  toclink.innerHTML = '<a href="#" onclick="scroll(0,0); showToc(); Effect.toggle('+"'SiteMapTable-result','blind');"+'">� Show Table of Contents</a> <img src="http://chenkaie.blog.googlepages.com/new_1.gif"/>';
+
+function showSiteMapTable() {
+  if (SiteMapTableLoaded) { 
+     displaySiteMapTable(postFilter);
+     var SiteMapTablelink = document.getElementById("SiteMapTablelink");
+   
+  }
+  else { alert("يرجي الإنتظار ..."); }
+}
+
+function hideSiteMapTable() {
+  var SiteMapTablediv = document.getElementById("SiteMapTable");
+  SiteMapTablediv.innerHTML = '';
+  var SiteMapTablelink = document.getElementById("SiteMapTablelink");
+  SiteMapTablelink.innerHTML = '<a href="#" onclick="scroll(0,0); showSiteMapTable(); Effect.toggle('+"'SiteMapTable-result','blind');"+'">» Show Table of Contents</a> <img src="http://chenkaie.blog.googlepages.com/new_1.gif"/>';
 }
