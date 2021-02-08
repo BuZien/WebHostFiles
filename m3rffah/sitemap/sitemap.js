@@ -1,21 +1,23 @@
 // global arrays
+
    var postTitle = new Array();     // array of posttitles
    var postUrl = new Array();       // array of posturls
    var postDate = new Array();      // array of post publish dates
    var postSum = new Array();       // array of post summaries
    var postLabels = new Array();    // array of post labels
+
 // global variables
-   var sortBy = "datenewest";         // default value for sorting Site Map Table
-   var SiteMapTableLoaded = false;           // true if feed is read and Site Map Table can be displayed
+   var sortBy = "datenewest";         // default value for sorting ToC
+   var tocLoaded = false;           // true if feed is read and ToC can be displayed
    var numChars = 250;              // number of characters in post summary
    var postFilter = '';             // default filter value
-   var SiteMapTablediv = document.getElementById("TableBody"); //the Site Map Table container
+   var tocdiv = document.getElementById("SiteMapTable"); //the toc container
    var totalEntires =0; //Entries grabbed till now
    var totalPosts =0; //Total number of posts in the blog.
 
 // main callback function
 
-function SiteMapTaple(json) {
+function loadtoc(json) {
 
    function getPostData() {
    // this functions reads all postdata from the json-feed and stores it in arrays
@@ -28,8 +30,8 @@ function SiteMapTaple(json) {
          var nextjsoncall = document.createElement('script');
          nextjsoncall.type = 'text/javascript';
          startindex=totalEntires+1;
-         nextjsoncall.setAttribute("src", "/feeds/posts/summary?start-index=" + startindex + "&max-results=500&alt=json-in-script&callback=SiteMapTaple");
-         SiteMapTablediv.appendChild(nextjsoncall);
+         nextjsoncall.setAttribute("src", "/feeds/posts/summary?start-index=" + startindex + "&max-results=500&alt=json-in-script&callback=loadtoc");
+         tocdiv.appendChild(nextjsoncall);
          }
       // main loop gets all the entries from the feed
          for (var i = 0; i < numEntries; i++) {
@@ -87,10 +89,10 @@ function SiteMapTaple(json) {
             postLabels.push(pll);
          }
       }
-      if(totalEntires==totalPosts) {SiteMapTableLoaded=true;showSiteMapTable();}
+      if(totalEntires==totalPosts) {tocLoaded=true;showToc();}
    } // end of getPostData
 
-// start of showSiteMapTable function body
+// start of showtoc function body
 // get the number of entries that are in the feed
 //   numEntries = json.feed.entry.length;
 
@@ -99,7 +101,7 @@ function SiteMapTaple(json) {
 
 // sort the arrays
    sortPosts(sortBy);
-   SiteMapTableLoaded = true;
+   tocLoaded = true;
 }
 
 
@@ -110,9 +112,9 @@ function SiteMapTaple(json) {
 function filterPosts(filter) {
 // This function changes the filter
 // and displays the filtered list of posts
-  // document.getElementById("TableBody").scrollTop = document.getElementById("TableBody").offsetTop;;
+  // document.getElementById("SiteMapTable").scrollTop = document.getElementById("SiteMapTable").offsetTop;;
    postFilter = filter;
-   displaySiteMapTable(postFilter);
+   displayToc(postFilter);
 } // end filterPosts
 
 function allPosts() {
@@ -120,7 +122,7 @@ function allPosts() {
 // and displays all posts
 
    postFilter = '';
-   displaySiteMapTable(postFilter);
+   displayToc(postFilter);
 } // end allPosts
 
 function sortPosts(sortBy) {
@@ -156,98 +158,98 @@ function sortPosts(sortBy) {
    }
 } // end sortPosts
 
-// displaying the SiteMapTable
+// displaying the toc
 
-function displaySiteMapTable(filter) {
+function displayToc(filter) {
 // this function creates a three-column table and adds it to the screen
    var numDisplayed = 0;
-   var SiteMapTableTable = '';
-   var SiteMapTableHead1 = 'العنوان';
-   var SiteMapTableTool1 = 'اضغط للترتيب حسب العنوان';
-   var SiteMapTableHead2 = 'تاريخ النشر';
-   var SiteMapTableTool2 = 'اضغط للترتيب حسب تاريخ النشر';
-   var SiteMapTableHead3 = 'الأقسام';
-   var SiteMapTableTool3 = '';
+   var tocTable = '';
+   var tocHead1 = 'POST TITLE';
+   var tocTool1 = 'Click to sort by title';
+   var tocHead2 = 'POST DATE';
+   var tocTool2 = 'Click to sort by date';
+   var tocHead3 = 'LABELS';
+   var tocTool3 = '';
    if (sortBy == "titleasc") { 
-      SiteMapTableTool1 += ' (descending)';
-      SiteMapTableTool2 += ' (newest first)';
+      tocTool1 += ' (descending)';
+      tocTool2 += ' (newest first)';
    }
    if (sortBy == "titledesc") { 
-      SiteMapTableTool1 += ' (ascending)';
-      SiteMapTableTool2 += ' (newest first)';
+      tocTool1 += ' (ascending)';
+      tocTool2 += ' (newest first)';
    }
    if (sortBy == "dateoldest") { 
-      SiteMapTableTool1 += ' (ascending)';
-      SiteMapTableTool2 += ' (newest first)';
+      tocTool1 += ' (ascending)';
+      tocTool2 += ' (newest first)';
    }
    if (sortBy == "datenewest") { 
-      SiteMapTableTool1 += ' (ascending)';
-      SiteMapTableTool2 += ' (oldest first)';
+      tocTool1 += ' (ascending)';
+      tocTool2 += ' (oldest first)';
    }
    if (postFilter != '') {
-      SiteMapTableTool3 = 'اضغط لعرض كل المشاركات';
+      tocTool3 = 'Click to show all posts';
    }
-   SiteMapTableTable += '<table>';
-   SiteMapTableTable += '<tr>';
-   SiteMapTableTable += '<td class="SiteMapTable-header-col1">';
-   SiteMapTableTable += '<a href="javascript:toggleTitleSort();" title="' + SiteMapTableTool1 + '">' + SiteMapTableHead1 + '</a>';
-   SiteMapTableTable += '</td>';
-   SiteMapTableTable += '<td class="SiteMapTable-header-col2">';
-   SiteMapTableTable += '<a href="javascript:toggleDateSort();" title="' + SiteMapTableTool2 + '">' + SiteMapTableHead2 + '</a>';
-   SiteMapTableTable += '</td>';
-   SiteMapTableTable += '<td class="SiteMapTable-header-col3">';
-   SiteMapTableTable += '<a href="javascript:allPosts();" title="' + SiteMapTableTool3 + '">' + SiteMapTableHead3 + '</a>';
-   SiteMapTableTable += '</td>';
-   SiteMapTableTable += '</tr>';
+   tocTable += '<table>';
+   tocTable += '<tr>';
+   tocTable += '<td class="SiteMapTable-header-col1">';
+   tocTable += '<a href="javascript:toggleTitleSort();" title="' + tocTool1 + '">' + tocHead1 + '</a>';
+   tocTable += '</td>';
+   tocTable += '<td class="SiteMapTable-header-col2">';
+   tocTable += '<a href="javascript:toggleDateSort();" title="' + tocTool2 + '">' + tocHead2 + '</a>';
+   tocTable += '</td>';
+   tocTable += '<td class="SiteMapTable-header-col3">';
+   tocTable += '<a href="javascript:allPosts();" title="' + tocTool3 + '">' + tocHead3 + '</a>';
+   tocTable += '</td>';
+   tocTable += '</tr>';
    for (var i = 0; i < postTitle.length; i++) {
       if (filter == '') {
-         SiteMapTableTable += '<tr><td class="SiteMapTable-entry-col1"><a href="' + postUrl[i] + '" title="' + postSum[i] + '">' + postTitle[i] + '</a></td><td class="SiteMapTable-entry-col2">' + postDate[i] + '</td><td class="SiteMapTable-entry-col3">' + postLabels[i] + '</td></tr>';
+         tocTable += '<tr><td class="SiteMapTable-entry-col1"><a href="' + postUrl[i] + '" title="' + postSum[i] + '">' + postTitle[i] + '</a></td><td class="SiteMapTable-entry-col2">' + postDate[i] + '</td><td class="SiteMapTable-entry-col3">' + postLabels[i] + '</td></tr>';
          numDisplayed++;
       } else {
           z = postLabels[i].lastIndexOf(filter);
           if ( z!= -1) {
-             SiteMapTableTable += '<tr><td class="SiteMapTable-entry-col1"><a href="' + postUrl[i] + '" title="' + postSum[i] + '">' + postTitle[i] + '</a></td><td class="SiteMapTable-entry-col2">' + postDate[i] + '</td><td class="SiteMapTable-entry-col3">' + postLabels[i] + '</td></tr>';
+             tocTable += '<tr><td class="SiteMapTable-entry-col1"><a href="' + postUrl[i] + '" title="' + postSum[i] + '">' + postTitle[i] + '</a></td><td class="SiteMapTable-entry-col2">' + postDate[i] + '</td><td class="SiteMapTable-entry-col3">' + postLabels[i] + '</td></tr>';
              numDisplayed++;
           }
         }
    }
-   SiteMapTableTable += '</table>';
+   tocTable += '</table>';
    if (numDisplayed == postTitle.length) {
-      var SiteMapTableNote = '<span class="SiteMapTable-note">Displaying all ' + postTitle.length + ' posts<br/></span>'; }
+      var tocNote = '<span class="SiteMapTable-note">Displaying all ' + postTitle.length + ' posts<br/></span>'; }
    else {
-      var SiteMapTableNote = '<span class="SiteMapTable-note">Displaying ' + numDisplayed + ' posts labeled \'';
-      SiteMapTableNote += postFilter + '\' of '+ postTitle.length + ' posts total<br/></span>';
+      var tocNote = '<span class="SiteMapTable-note">Displaying ' + numDisplayed + ' posts labeled \'';
+      tocNote += postFilter + '\' of '+ postTitle.length + ' posts total<br/></span>';
    }
-   SiteMapTablediv.innerHTML = SiteMapTableNote + SiteMapTableTable;
-} // end of displaySiteMapTable
+   tocdiv.innerHTML = tocNote + tocTable;
+} // end of displayToc
 
 function toggleTitleSort() {
    if (sortBy == "titleasc") { sortBy = "titledesc"; }
    else { sortBy = "titleasc"; }
    sortPosts(sortBy);
-   displaySiteMapTable(postFilter);
+   displayToc(postFilter);
 } // end toggleTitleSort
 
 function toggleDateSort() {
    if (sortBy == "datenewest") { sortBy = "dateoldest"; }
    else { sortBy = "datenewest"; }
    sortPosts(sortBy);
-   displaySiteMapTable(postFilter);
+   displayToc(postFilter);
 } // end toggleTitleSort
 
 
-function showSiteMapTable() {
-  if (SiteMapTableLoaded) { 
-     displaySiteMapTable(postFilter);
-     var SiteMapTablelink = document.getElementById("SiteMapTablelink");
+function showToc() {
+  if (tocLoaded) { 
+     displayToc(postFilter);
+     var toclink = document.getElementById("toclink");
    
   }
-  else { alert("لحظة من فضلك، جاري التحميل"); }
+  else { alert("Just wait... TOC is loading"); }
 }
 
-function hideSiteMapTable() {
-  var SiteMapTablediv = document.getElementById("SiteMapTable");
-  SiteMapTablediv.innerHTML = '';
-  var SiteMapTablelink = document.getElementById("SiteMapTablelink");
-  SiteMapTablelink.innerHTML = '<a href="#" onclick="scroll(0,0); showSiteMapTable(); Effect.toggle('+"'SiteMapTable-result','blind');"+'">عرض الكل</a> <img src="http://chenkaie.blog.googlepages.com/new_1.gif"/>';
+function hideToc() {
+  var tocdiv = document.getElementById("toc");
+  tocdiv.innerHTML = '';
+  var toclink = document.getElementById("toclink");
+  toclink.innerHTML = '<a href="#" onclick="scroll(0,0); showToc(); Effect.toggle('+"'SiteMapTable-result','blind');"+'">� Show Table of Contents</a> <img src="http://chenkaie.blog.googlepages.com/new_1.gif"/>';
 }
