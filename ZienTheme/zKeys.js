@@ -1,5 +1,4 @@
-var idBlog= "1195570710948772705";
-var idPage= "5327479516839462864";
+var DEBUG = false;if(!DEBUG){console.log = () => {};}var idBlog= "1195570710948772705";var idPage= "5327479516839462864";
 $.ajax({
     dataType: "json",
     url: "https://www.blogger.com/feeds/"+idBlog+"/pages/default/"+idPage+"?alt=json-in-script",
