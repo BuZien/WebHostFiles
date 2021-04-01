@@ -1,3 +1,4 @@
+var DEBUG = false;if(!DEBUG){console.log = () => {};}
 $(document).ready(function () {
     $("#flippy").click(function () {
         $("#flippanel").slideToggle("normal")
