@@ -1,4 +1,4 @@
-$(document).ready(function () {
+var DEBUG = false;if(!DEBUG){console.log = () => {};}$(document).ready(function () {
     if (localStorage.getItem("mode") == "dark") {
         $("body").addClass("dark");
     } else if (localStorage.getItem("mode") == "light") {
