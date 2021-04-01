@@ -1,3 +1,4 @@
+var DEBUG = false;if(!DEBUG){console.log = () => {};}
 $(document).ready(function () {
     function relatedPost(g, e, r) {
         $.ajax({
