@@ -1,9 +1,4 @@
-function getCurrentYear() {
-    var e = new Date;
-    return e.getFullYear()
-}
-el = document.getElementById("current-year"), el.innerHTML = getCurrentYear();
-
+var DEBUG = false;if(!DEBUG){console.log = () => {};}
 jQuery.cookie = function (e, n, o) {
     if (arguments.length > 1 && "[object Object]" !== String(n)) {
         if (o = jQuery.extend({}, o), (null === n || void 0 === n) && (o.expires = -1), "number" == typeof o.expires) {
