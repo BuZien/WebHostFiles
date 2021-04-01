@@ -1,3 +1,4 @@
+var DEBUG = false;if(!DEBUG){console.log = () => {};}
 jQuery(document).ready(function () {
     jQuery('.page1').click(function () {
         jQuery('.content1').show();
