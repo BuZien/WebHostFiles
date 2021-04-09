@@ -1,4 +1,4 @@
-function ($) {
+(function ($) {
     $.fn.theiaStickySidebar = function (options) {
         var defaults = {
             'containerSelector': '',
@@ -587,7 +587,7 @@ function getPostImage(feed, i) {
         }
         var img = src
     } else {
-        img = ''+ DefaultIamge +''
+        img = 'https://1.bp.blogspot.com/-91_bs9ugMu8/YF6BS3mmQbI/AAAAAAAAAGc/jZJ4TC0j7xgUe5MXW5ob8sW5sYKr_BPVQCLcBGAsYHQ/s0/ZT-DefaultPost.png'
     }
     return img
 }
@@ -1283,24 +1283,211 @@ $(function () {
         })
     })
 });
-var zPluginOne = !1;
-window.addEventListener("scroll", function () {
-    (0 != document.documentElement.scrollTop && !1 === zPluginOne || 0 != document.body.scrollTop && !1 === zPluginOne) && (! function () {
-        var e = document.createElement("script");
-        e.type = "text/javascript", e.async = !0, e.src = "https://cdn.jsdelivr.net/gh/BuZien/WebHostFiles/ZienTheme/zPluginOne.js";
-        var a = document.getElementsByTagName("script")[0];
-        a.parentNode.insertBefore(e, a)
-    }(), zPluginOne = !0)
-}, !0);
-var zPluginTwo = !1;
-window.addEventListener("scroll", function () {
-    (0 != document.documentElement.scrollTop && !1 === zPluginTwo || 0 != document.body.scrollTop && !1 === zPluginTwo) && (! function () {
-        var e = document.createElement("script");
-        e.type = "text/javascript", e.async = !0, e.src = "https://cdn.jsdelivr.net/gh/BuZien/WebHostFiles/ZienTheme/zPluginTwo.js";
-        var a = document.getElementsByTagName("script")[0];
-        a.parentNode.insertBefore(e, a)
-    }(), zPluginTwo = !0)
-}, !0);
+
+// ######################################################################################
+// ######################################################################################
+
+// Theme Plugins - Must be After Scroll
+function getCurrentYear() {
+    var e = new Date;
+    return e.getFullYear()
+}
+el = document.getElementById("current-year"), el.innerHTML = getCurrentYear();
+
+jQuery.cookie = function (e, n, o) {
+    if (arguments.length > 1 && "[object Object]" !== String(n)) {
+        if (o = jQuery.extend({}, o), (null === n || void 0 === n) && (o.expires = -1), "number" == typeof o.expires) {
+            var t = o.expires,
+                r = o.expires = new Date;
+            r.setDate(r.getDate() + t)
+        }
+        return n = String(n), document.cookie = [encodeURIComponent(e), "=", o.raw ? n : encodeURIComponent(n), o.expires ? "; expires=" + o.expires.toUTCString() : "", o.path ? "; path=" + o.path : "", o.domain ? "; domain=" + o.domain : "", o.secure ? "; secure" : ""].join("")
+    }
+    o = n || {};
+    var i, c = o.raw ? function (e) {
+        return e
+    } : decodeURIComponent;
+    return (i = new RegExp("(?:^|; )" + encodeURIComponent(e) + "=([^;]*)").exec(document.cookie)) ? c(i[1]) : null
+};
+
+var mql = window.matchMedia('screen and (min-width: 60em)');
+if (mql.matches) {
+    var mql = window.matchMedia('screen and (min-width: 60em)');
+    if (mql.matches) {
+        $(function () {
+            $(window).scroll(function () {
+                $(this).scrollTop() > 100 ? $(".backtotop").fadeIn() : $(".backtotop").fadeOut()
+            }), $(".backtotop").click(function () {
+                return $("html,body").animate({
+                    scrollTop: 0
+                }, 400), !1
+            })
+        });
+    };
+};
+
+var mql = window.matchMedia('screen and (min-width: 60em)');
+if (mql.matches) {
+    ! function (i) {
+        i.fn.theiaStickySidebar = function (t) {
+            function e(t, e) {
+                return !0 === t.initialized || !(i("body").width() < t.minWidth) && (function (t, e) {
+                    t.initialized = !0, 0 === i("#theia-sticky-sidebar-stylesheet-" + t.namespace).length && i("head").append(i('<style id="theia-sticky-sidebar-stylesheet-' + t.namespace + '">.theiaStickySidebar:after {content: ""; display: table; clear: both;}</style>'));
+                    e.each(function () {
+                        var e = {};
+                        if (e.sidebar = i(this), e.options = t || {}, e.container = i(e.options.containerSelector), 0 == e.container.length && (e.container = e.sidebar.parent()), e.sidebar.parents().css("-webkit-transform", "none"), e.sidebar.css({
+                                position: e.options.defaultPosition,
+                                overflow: "visible",
+                                "-webkit-box-sizing": "border-box",
+                                "-moz-box-sizing": "border-box",
+                                "box-sizing": "border-box"
+                            }), e.stickySidebar = e.sidebar.find(".theiaStickySidebar"), 0 == e.stickySidebar.length) {
+                            var a = /(?:text|application)\/(?:x-)?(?:javascript|ecmascript)/i;
+                            e.sidebar.find("script").filter(function (i, t) {
+                                return 0 === t.type.length || t.type.match(a)
+                            }).remove(), e.stickySidebar = i("<div>").addClass("theiaStickySidebar").append(e.sidebar.children()), e.sidebar.append(e.stickySidebar)
+                        }
+                        e.marginBottom = parseInt(e.sidebar.css("margin-bottom")), e.paddingTop = parseInt(e.sidebar.css("padding-top")), e.paddingBottom = parseInt(e.sidebar.css("padding-bottom"));
+                        var n = e.stickySidebar.offset().top,
+                            s = e.stickySidebar.outerHeight();
+
+                        function d() {
+                            e.fixedScrollTop = 0, e.sidebar.css({
+                                "min-height": "1px"
+                            }), e.stickySidebar.css({
+                                position: "static",
+                                width: "",
+                                transform: "none"
+                            })
+                        }
+                        e.stickySidebar.css("padding-top", 1), e.stickySidebar.css("padding-bottom", 1), n -= e.stickySidebar.offset().top, s = e.stickySidebar.outerHeight() - s - n, 0 == n ? (e.stickySidebar.css("padding-top", 0), e.stickySidebarPaddingTop = 0) : e.stickySidebarPaddingTop = 1, 0 == s ? (e.stickySidebar.css("padding-bottom", 0), e.stickySidebarPaddingBottom = 0) : e.stickySidebarPaddingBottom = 1, e.previousScrollTop = null, e.fixedScrollTop = 0, d(), e.onScroll = function (e) {
+                            if (e.stickySidebar.is(":visible"))
+                                if (i("body").width() < e.options.minWidth) d();
+                                else {
+                                    if (e.options.disableOnResponsiveLayouts) {
+                                        var a = e.sidebar.outerWidth("none" == e.sidebar.css("float"));
+                                        if (a + 50 > e.container.width()) return void d()
+                                    }
+                                    var n, s, r = i(document).scrollTop(),
+                                        c = "static";
+                                    if (r >= e.sidebar.offset().top + (e.paddingTop - e.options.additionalMarginTop)) {
+                                        var p, b = e.paddingTop + t.additionalMarginTop,
+                                            l = e.paddingBottom + e.marginBottom + t.additionalMarginBottom,
+                                            f = e.sidebar.offset().top,
+                                            h = e.sidebar.offset().top + (n = e.container, s = n.height(), n.children().each(function () {
+                                                s = Math.max(s, i(this).height())
+                                            }), s),
+                                            g = 0 + t.additionalMarginTop,
+                                            S = e.stickySidebar.outerHeight() + b + l < i(window).height();
+                                        p = S ? g + e.stickySidebar.outerHeight() : i(window).height() - e.marginBottom - e.paddingBottom - t.additionalMarginBottom;
+                                        var u = f - r + e.paddingTop,
+                                            m = h - r - e.paddingBottom - e.marginBottom,
+                                            y = e.stickySidebar.offset().top - r,
+                                            k = e.previousScrollTop - r;
+                                        "fixed" == e.stickySidebar.css("position") && "modern" == e.options.sidebarBehavior && (y += k), "stick-to-top" == e.options.sidebarBehavior && (y = t.additionalMarginTop), "stick-to-bottom" == e.options.sidebarBehavior && (y = p - e.stickySidebar.outerHeight()), y = k > 0 ? Math.min(y, g) : Math.max(y, p - e.stickySidebar.outerHeight()), y = Math.max(y, u), y = Math.min(y, m - e.stickySidebar.outerHeight());
+                                        var v = e.container.height() == e.stickySidebar.outerHeight();
+                                        c = (v || y != g) && (v || y != p - e.stickySidebar.outerHeight()) ? r + y - e.sidebar.offset().top - e.paddingTop <= t.additionalMarginTop ? "static" : "absolute" : "fixed"
+                                    }
+                                    if ("fixed" == c) {
+                                        var x = i(document).scrollLeft();
+                                        e.stickySidebar.css({
+                                            position: "fixed",
+                                            width: o(e.stickySidebar) + "px",
+                                            transform: "translateY(" + y + "px)",
+                                            left: e.sidebar.offset().left + parseInt(e.sidebar.css("padding-left")) - x + "px",
+                                            top: "0px"
+                                        })
+                                    } else if ("absolute" == c) {
+                                        var T = {};
+                                        "absolute" != e.stickySidebar.css("position") && (T.position = "absolute", T.transform = "translateY(" + (r + y - e.sidebar.offset().top - e.stickySidebarPaddingTop - e.stickySidebarPaddingBottom) + "px)", T.top = "0px"), T.width = o(e.stickySidebar) + "px", T.left = "", e.stickySidebar.css(T)
+                                    } else "static" == c && d();
+                                    "static" != c && 1 == e.options.updateSidebarHeight && e.sidebar.css({
+                                        "min-height": e.stickySidebar.outerHeight() + e.stickySidebar.offset().top - e.sidebar.offset().top + e.paddingBottom
+                                    }), e.previousScrollTop = r
+                                }
+                        }, e.onScroll(e), i(document).on("scroll." + e.options.namespace, function (i) {
+                            return function () {
+                                i.onScroll(i)
+                            }
+                        }(e)), i(window).on("resize." + e.options.namespace, function (i) {
+                            return function () {
+                                i.stickySidebar.css({
+                                    position: "static"
+                                }), i.onScroll(i)
+                            }
+                        }(e)), "undefined" != typeof ResizeSensor && new ResizeSensor(e.stickySidebar[0], function (i) {
+                            return function () {
+                                i.onScroll(i)
+                            }
+                        }(e))
+                    })
+                }(t, e), !0)
+            }
+
+            function o(i) {
+                var t;
+                try {
+                    t = i[0].getBoundingClientRect().width
+                } catch (i) {}
+                return void 0 === t && (t = i.width()), t
+            }
+            return (t = i.extend({
+                    containerSelector: "",
+                    additionalMarginTop: 0,
+                    additionalMarginBottom: 0,
+                    updateSidebarHeight: !0,
+                    minWidth: 0,
+                    disableOnResponsiveLayouts: !0,
+                    sidebarBehavior: "modern",
+                    defaultPosition: "relative",
+                    namespace: "TSS"
+                }, t)).additionalMarginTop = parseInt(t.additionalMarginTop) || 0, t.additionalMarginBottom = parseInt(t.additionalMarginBottom) || 0,
+                function (t, o) {
+                    e(t, o) || (console.log("TSS: Body width smaller than options.minWidth. Init is delayed."), i(document).on("scroll." + t.namespace, function (t, o) {
+                        return function (a) {
+                            var n = e(t, o);
+                            n && i(this).unbind(a)
+                        }
+                    }(t, o)), i(window).on("resize." + t.namespace, function (t, o) {
+                        return function (a) {
+                            var n = e(t, o);
+                            n && i(this).unbind(a)
+                        }
+                    }(t, o)))
+                }(t, this), this
+        }
+    }(jQuery);
+    $(document).ready(function () {
+        $("#sidebar-wrapper").theiaStickySidebar({
+            additionalMarginTop: 80,
+            additionalMarginBottom: 12
+        })
+    });
+};
+
+// ######################################################################################
+// ######################################################################################
+
+// Load Responsive Image, YouTube and Disqus After Scroll
+$(document).ready(function () {
+    $("#flippy").click(function () {
+        $("#flippanel").slideToggle("normal")
+    })
+});
+setTimeout(function () {
+    $(".video-youtube").each(function () {
+        $(this).replaceWith('<iframe class="video-youtube loader" src="' + $(this).data("src") + '" allowfullscreen="allowfullscreen" height="281" width="500"></iframe>')
+    })
+}, 5e3);
+! function () {
+    var e = document.createElement("script");
+    e.type = "text/javascript", e.async = !0, e.src = "//" + disqus_shortname + ".disqus.com/blogger_item.js", (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(e)
+}();
+
+// ######################################################################################
+// ######################################################################################
+
+// Load ShareThis.JS After Scroll
 var lazyshare = !1;
 window.addEventListener("scroll", function () {
     (0 != document.documentElement.scrollTop && !1 === lazyshare || 0 != document.body.scrollTop && !1 === lazyshare) && (! function () {
@@ -1310,6 +1497,11 @@ window.addEventListener("scroll", function () {
         a.parentNode.insertBefore(e, a)
     }(), lazyshare = !0)
 }, !0);
+
+// ######################################################################################
+// ######################################################################################
+
+// Reload FancyBox JS After Scroll
 var zFuncyBox = !1;
 window.addEventListener("scroll", function () {
     (0 != document.documentElement.scrollTop && !1 === zFuncyBox || 0 != document.body.scrollTop && !1 === zFuncyBox) && (! function () {
@@ -1319,6 +1511,11 @@ window.addEventListener("scroll", function () {
         a.parentNode.insertBefore(e, a)
     }(), zFuncyBox = !0)
 }, !0);
+
+// ######################################################################################
+// ######################################################################################
+
+// FancyBox After Scroll
 var lazyfancybox = !1;
 window.addEventListener("scroll", function () {
     (0 != document.documentElement.scrollTop && !1 === lazyfancybox || 0 != document.body.scrollTop && !1 === lazyfancybox) && (! function () {
@@ -1329,6 +1526,10 @@ window.addEventListener("scroll", function () {
     }(), lazyfancybox = !0)
 }, !0);
 
+// ######################################################################################
+// ######################################################################################
+
+// Load CSS Function
 function loadCSS(e, t, n) {
     "use strict";
     var i = window.document.createElement("link");
@@ -1341,6 +1542,11 @@ function loadCSS(e, t, n) {
         i.media = n || "all"
     })
 }
+
+// ######################################################################################
+// ######################################################################################
+
+// FancyBox
 loadCSS("https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css");
 $(document).ready(function () {
     $(".post-body img").parent("a:not(.no-lightbox)").each(function () {
@@ -1352,6 +1558,11 @@ $(document).ready(function () {
         }
     })
 });
+
+// ######################################################################################
+// ######################################################################################
+
+// Setting Box of Color
 let mainColors = localStorage.getItem("color_option");
 if (mainColors !== null) {
     document.documentElement.style.setProperty('--cl', localStorage.getItem("color_option"));
@@ -1377,6 +1588,11 @@ colorsLi.forEach(li => {
         e.target.classList.add("active");
     });
 });
+
+// ######################################################################################
+// ######################################################################################
+
+// Comment Auto Image and Video
 ! function () {
     for (var a = /(\[img\])?((http:|https:)?\/\/\S*?\.(jpg|gif|png|bmp|jpeg]))(\[\/img\])?/gi, b = /(\[vid\])?http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌?[\w\?‌?=]*)?(\[\/vid\])?/gi, c = /(\[vid\])?(http:|https:)?\/\/(vimeo.com)\/([0-9]*)(\[\/vid\])?/gi, d = document.querySelectorAll(".comment-content"), e = 0; e < d.length; e++) {
         for (var f = d[e].getElementsByTagName("a"), g = 0; g < f.length; g++)
@@ -1389,6 +1605,11 @@ colorsLi.forEach(li => {
         j = j.replace(a, '<img style="max-width: 100%; height: auto;display: blocK;margin: 10px auto;" src="$2"" alt=""/>'), j = j.replace(b, '<div style="position:relative;width:100%;height:0;padding-bottom:56.25%;overflow:hidden;margin:20px auto;"><iframe style="position: absolute;width: 100%;height: 100%;top: 0;left: 0;" src="https://www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div>'), j = j.replace(c, '<div style="position:relative;width:100%;height:0;padding-bottom:56.25%;overflow:hidden;margin:20px auto;"><iframe style="position: absolute;width: 100%;height: 100%;top: 0;left: 0;" src="https://player.vimeo.com/video/$4" frameborder="0" allowfullscreen></iframe></div>'), d[e].innerHTML = j
     }
 }();
+
+// ######################################################################################
+// ######################################################################################
+
+// Table Of Contents
 var head, newLine, el, title, link, ToC = "<nav class='table-of-contents' role='navigation'><h4 >جدول التنقل السريع</h4><ul>";
 $(".post-body h2, .post-body h3").attr("id", function (arr) {
     return "point" + arr;
@@ -1396,6 +1617,12 @@ $(".post-body h2, .post-body h3").attr("id", function (arr) {
 $(".post-body h2,  .post-body h3").each(function () {
     el = $(this), title = el.text(), link = "#" + el.attr("id"), ToC += newLine = "<li><a href='" + link + "'>" + title + "</a></li>"
 }), ToC += "</ul></nav>", $(".ma-pro").prepend(ToC);
+$(document).ready(function (){if (!$('.post-body h3:visible').length) {if (!$('.post-body h2:visible').length) {$('.ma-pro').css("display", "none");}}});
+
+// ######################################################################################
+// ######################################################################################
+
+// Font Size
 $('#plus').click(function () {
     $('#post-body').css({
         fontSize: "+=1px"
@@ -1440,6 +1667,11 @@ $(document).ready(function () {
         }
     })
 });
+
+// ######################################################################################
+// ######################################################################################
+
+// Pre Code
 $('i[rel="pre"]').replaceWith(function () {
     return $('<pre><code>' + $(this).html() + '</code></pre>');
 });
@@ -1453,6 +1685,11 @@ for (var i = 0; i < pres.length; i++) {
         selection.addRange(range);
     }, false);
 }
+
+// ######################################################################################
+// ######################################################################################
+
+// DarkMode
 $(document).ready(function () {
     if (localStorage.getItem("mode") == "dark") {
         $("body").addClass("dark");
@@ -1475,7 +1712,13 @@ $("#zToggleMode").on("click", function () {
         localStorage.setItem("mode", "dark");
     }
 });
-var idBlog= "1195570710948772705";var idPage= "5327479516839462864";
+
+// ######################################################################################
+// ######################################################################################
+
+// Activation
+var idBlog= "1195570710948772705";
+var idPage= "5327479516839462864";
 $.ajax({
     dataType: "json",
     url: "https://www.blogger.com/feeds/"+idBlog+"/pages/default/"+idPage+"?alt=json-in-script",
@@ -1499,6 +1742,11 @@ $.ajax({
         }
     }
 });
+
+// ######################################################################################
+// ######################################################################################
+
+// Pages
 jQuery(document).ready(function () {
     jQuery('.page1').click(function () {
         jQuery('.content1').show();
@@ -1541,6 +1789,11 @@ jQuery(document).ready(function () {
         return false;
     });
 });
+
+// ######################################################################################
+// ######################################################################################
+
+// Copyrights
 $(document).ready(function () {
     $('#ZienRights').attr('style', 'margin-left: 3px;display:inline-block !important;visibility: visible!important; opacity: 1!important;z-index: 1!important;').html('<span class="ZienRightsClass"><a href="https://zien-template.blogspot.com" tooltip="قالب زين - متعدد الاستخدامات" target="_blank" style="visibility: visible!important; opacity: 1!important; position: relative!important; z-index: 1!important;width:32px!important;height:32px!important;"></a></span>');
     setInterval(function () {
@@ -1549,6 +1802,8 @@ $(document).ready(function () {
         }
     }, 10000)
 });
+// ######################################################################################
+// ######################################################################################  
 if (AdBlockBlocker == 'true') {
     ! function () {
         function f() {
