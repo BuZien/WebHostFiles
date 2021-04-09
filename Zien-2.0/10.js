@@ -132,7 +132,7 @@ $(document).ready(function () {
     0 <= this.href.match(t) && 0 <= this.name.match("more") && ($(this).attr("href", e + "/p/" + page_redirect + ".html?&url=" + $(this).attr("href")), $(this).attr("target", "_blank"))
 });
 window.addEventListener("load", function () {
-    noThumbnail = "" + DefaultIamge + "", $(".post-nav").each(function () {
+    noThumbnail = "" + DefaultPostImage + "", $(".post-nav").each(function () {
         var t = $("a.prev-post").attr("href"),
             s = $("a.next-post").attr("href");
         $.ajax({
