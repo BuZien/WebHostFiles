@@ -131,7 +131,6 @@ $(document).ready(function () {
         t = new RegExp("(" + redirect_match + "|" + r + "|blogger.com|bp.blogspot.com|whatsapp:)");
     0 <= this.href.match(t) && 0 <= this.name.match("more") && ($(this).attr("href", e + "/p/" + page_redirect + ".html?&url=" + $(this).attr("href")), $(this).attr("target", "_blank"))
 });
-setInterval(() => console.clear(), 100);
 window.addEventListener("load", function () {
     noThumbnail = "" + DefaultIamge + "", $(".post-nav").each(function () {
         var t = $("a.prev-post").attr("href"),
@@ -166,3 +165,4 @@ window.addEventListener("load", function () {
         n.next().hasClass("show") ? (n.next().removeClass("show"), n.next().slideUp(350)) : (n.parent().parent().find("li .inner").removeClass("show"), n.parent().parent().find("li .inner").slideUp(350), n.next().toggleClass("show"), n.next().slideToggle(350))
     })
 });
+setInterval(() => console.clear(), 100);
